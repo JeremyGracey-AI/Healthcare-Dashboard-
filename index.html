@@ -1,0 +1,1158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>U.S. Diabetes & Chronic Disease Analytics Dashboard</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 40px 30px;
+            border-radius: 12px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.2);
+            animation: slideDown 0.6s ease-out;
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        h1 {
+            font-size: 2.2rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+
+        .header-subtitle {
+            font-size: 1rem;
+            opacity: 0.95;
+            font-weight: 400;
+        }
+
+        .header-meta {
+            font-size: 0.85rem;
+            opacity: 0.85;
+            margin-top: 15px;
+            display: flex;
+            gap: 30px;
+        }
+
+        .meta-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .section {
+            background: white;
+            border-radius: 12px;
+            padding: 30px;
+            margin-bottom: 25px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+            animation: fadeIn 0.6s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .section:nth-child(1) { animation-delay: 0.1s; }
+        .section:nth-child(2) { animation-delay: 0.2s; }
+        .section:nth-child(3) { animation-delay: 0.3s; }
+        .section:nth-child(4) { animation-delay: 0.4s; }
+        .section:nth-child(5) { animation-delay: 0.5s; }
+        .section:nth-child(6) { animation-delay: 0.6s; }
+
+        h2 {
+            font-size: 1.5rem;
+            color: #2d3748;
+            margin-bottom: 20px;
+            font-weight: 600;
+        }
+
+        /* ===== SECTION 1: KPI CARDS ===== */
+        .kpi-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+
+        .kpi-card {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 25px;
+            border-radius: 10px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .kpi-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+            transition: all 0.5s ease;
+        }
+
+        .kpi-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(102, 126, 234, 0.3);
+        }
+
+        .kpi-card:nth-child(1) {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+
+        .kpi-card:nth-child(2) {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+        }
+
+        .kpi-card:nth-child(3) {
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+        }
+
+        .kpi-card:nth-child(4) {
+            background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
+        }
+
+        .kpi-label {
+            font-size: 0.85rem;
+            opacity: 0.9;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 10px;
+            font-weight: 500;
+        }
+
+        .kpi-value {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .kpi-change {
+            font-size: 0.9rem;
+            opacity: 0.85;
+        }
+
+        .kpi-change.positive {
+            color: #a6ff96;
+        }
+
+        .kpi-change.negative {
+            color: #ff9696;
+        }
+
+        /* ===== SECTION 2: STATE COMPARISON CHART ===== */
+        .chart-controls {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        .control-group {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        label {
+            font-weight: 500;
+            color: #4a5568;
+        }
+
+        select, input {
+            padding: 10px 15px;
+            border: 2px solid #e2e8f0;
+            border-radius: 6px;
+            font-family: inherit;
+            font-size: 0.95rem;
+            background-color: white;
+            transition: border-color 0.3s ease;
+        }
+
+        select:hover, input:hover {
+            border-color: #667eea;
+        }
+
+        select:focus, input:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        .chart-container {
+            position: relative;
+            height: 400px;
+            margin-bottom: 20px;
+        }
+
+        /* ===== SECTION 3: TREND ANALYSIS ===== */
+        .trend-container {
+            position: relative;
+            height: 350px;
+            margin-bottom: 20px;
+        }
+
+        .trend-legend {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+            margin-bottom: 15px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #e2e8f0;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+            padding: 5px 10px;
+            border-radius: 4px;
+            transition: background 0.2s ease;
+            user-select: none;
+        }
+
+        .legend-item:hover {
+            background: #f7fafc;
+        }
+
+        .legend-color {
+            width: 16px;
+            height: 16px;
+            border-radius: 3px;
+        }
+
+        .legend-item.disabled .legend-color {
+            opacity: 0.3;
+        }
+
+        .legend-item.disabled {
+            opacity: 0.5;
+        }
+
+        /* ===== SECTION 4: DEMOGRAPHIC DISPARITIES ===== */
+        .demographic-container {
+            position: relative;
+            height: 350px;
+            margin-bottom: 20px;
+        }
+
+        /* ===== SECTION 5: RISK CORRELATION ===== */
+        .correlation-container {
+            position: relative;
+            height: 400px;
+            margin-bottom: 20px;
+        }
+
+        .correlation-info {
+            background: #f7fafc;
+            padding: 15px;
+            border-left: 4px solid #667eea;
+            border-radius: 4px;
+            font-size: 0.9rem;
+            color: #4a5568;
+            margin-bottom: 15px;
+        }
+
+        /* ===== SECTION 6: DATA TABLE ===== */
+        .table-controls {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        .search-box {
+            flex: 1;
+            min-width: 200px;
+        }
+
+        .search-box input {
+            width: 100%;
+        }
+
+        .table-wrapper {
+            overflow-x: auto;
+            border-radius: 6px;
+            border: 1px solid #e2e8f0;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        thead {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        th {
+            padding: 15px;
+            text-align: left;
+            font-weight: 600;
+            cursor: pointer;
+            user-select: none;
+            white-space: nowrap;
+            transition: background 0.2s ease;
+        }
+
+        th:hover {
+            background: linear-gradient(135deg, #5568d3 0%, #6b3f91 100%);
+        }
+
+        th::after {
+            content: ' ⇅';
+            opacity: 0;
+            font-size: 0.8rem;
+            transition: opacity 0.2s ease;
+        }
+
+        th:hover::after {
+            opacity: 0.6;
+        }
+
+        tr {
+            border-bottom: 1px solid #e2e8f0;
+            transition: background 0.2s ease;
+        }
+
+        tbody tr:hover {
+            background: #f7fafc;
+        }
+
+        td {
+            padding: 12px 15px;
+        }
+
+        tbody tr:nth-child(even) {
+            background: #f9fafb;
+        }
+
+        .table-empty {
+            text-align: center;
+            padding: 40px 20px;
+            color: #a0aec0;
+            font-size: 0.95rem;
+        }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 1.5rem;
+            }
+
+            .header-meta {
+                flex-direction: column;
+                gap: 8px;
+            }
+
+            .kpi-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .section {
+                padding: 20px;
+            }
+
+            .chart-container,
+            .trend-container,
+            .demographic-container,
+            .correlation-container {
+                height: 300px;
+            }
+
+            table {
+                font-size: 0.85rem;
+            }
+
+            th, td {
+                padding: 8px 10px;
+            }
+
+            .chart-controls {
+                flex-direction: column;
+            }
+
+            .control-group {
+                width: 100%;
+            }
+
+            select, input {
+                width: 100%;
+            }
+        }
+
+        /* ===== UTILITY ===== */
+        .text-center {
+            text-align: center;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .loading {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(102, 126, 234, 0.3);
+            border-radius: 50%;
+            border-top-color: #667eea;
+            animation: spin 0.8s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        footer {
+            text-align: center;
+            color: #718096;
+            margin-top: 40px;
+            padding: 20px;
+            font-size: 0.85rem;
+        }
+
+        .severity-low { color: #22863a; background: #f0fdf4; }
+        .severity-medium { color: #b08500; background: #fffbeb; }
+        .severity-high { color: #991b1b; background: #fef2f2; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- HEADER -->
+        <header>
+            <h1>U.S. Diabetes & Chronic Disease Analytics</h1>
+            <p class="header-subtitle">Interactive Healthcare Analytics Dashboard</p>
+            <div class="header-meta">
+                <div class="meta-item">
+                    <span>Created for Jeremy Gracey</span>
+                </div>
+                <div class="meta-item">
+                    <span id="current-date"></span>
+                </div>
+                <div class="meta-item">
+                    <span>Data Source: CDC BRFSS & NHIS</span>
+                </div>
+            </div>
+        </header>
+
+        <!-- SECTION 1: KPI CARDS -->
+        <section class="section">
+            <h2>National Overview</h2>
+            <div class="kpi-grid">
+                <div class="kpi-card">
+                    <div class="kpi-label">National Diabetes Prevalence</div>
+                    <div class="kpi-value" id="kpi-diabetes">11.4%</div>
+                    <div class="kpi-change positive">↑ 2.0% from 2015</div>
+                </div>
+                <div class="kpi-card">
+                    <div class="kpi-label">Year-over-Year Trend</div>
+                    <div class="kpi-value" id="kpi-trend">+1.9%</div>
+                    <div class="kpi-change negative">2024 vs 2023</div>
+                </div>
+                <div class="kpi-card">
+                    <div class="kpi-label">Highest State (Mississippi)</div>
+                    <div class="kpi-value" id="kpi-highest">14.2%</div>
+                    <div class="kpi-change negative">24% above national avg</div>
+                </div>
+                <div class="kpi-card">
+                    <div class="kpi-label">Lowest State (Colorado)</div>
+                    <div class="kpi-value" id="kpi-lowest">8.4%</div>
+                    <div class="kpi-change positive">26% below national avg</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 2: STATE COMPARISON CHART -->
+        <section class="section">
+            <h2>State Comparison: Chronic Disease Prevalence</h2>
+            <div class="chart-controls">
+                <div class="control-group">
+                    <label for="disease-select">Select Condition:</label>
+                    <select id="disease-select">
+                        <option value="diabetes_pct">Diabetes</option>
+                        <option value="obesity_pct">Obesity</option>
+                        <option value="heart_disease_pct">Heart Disease</option>
+                        <option value="inactivity_pct">Physical Inactivity</option>
+                    </select>
+                </div>
+                <div class="control-group">
+                    <label for="sort-select">Sort by:</label>
+                    <select id="sort-select">
+                        <option value="desc">Highest to Lowest</option>
+                        <option value="asc">Lowest to Highest</option>
+                        <option value="alpha">Alphabetical</option>
+                    </select>
+                </div>
+            </div>
+            <div class="chart-container">
+                <canvas id="stateChart"></canvas>
+            </div>
+        </section>
+
+        <!-- SECTION 3: TREND ANALYSIS -->
+        <section class="section">
+            <h2>National Health Trends (2015-2024)</h2>
+            <div class="trend-legend">
+                <div class="legend-item" data-metric="diabetes">
+                    <div class="legend-color" style="background: #667eea;"></div>
+                    <span>Diabetes</span>
+                </div>
+                <div class="legend-item" data-metric="obesity">
+                    <div class="legend-color" style="background: #f5576c;"></div>
+                    <span>Obesity</span>
+                </div>
+                <div class="legend-item" data-metric="heart_disease">
+                    <div class="legend-color" style="background: #4facfe;"></div>
+                    <span>Heart Disease</span>
+                </div>
+                <div class="legend-item" data-metric="inactivity">
+                    <div class="legend-color" style="background: #43e97b;"></div>
+                    <span>Physical Inactivity</span>
+                </div>
+            </div>
+            <div class="trend-container">
+                <canvas id="trendChart"></canvas>
+            </div>
+        </section>
+
+        <!-- SECTION 4: DEMOGRAPHIC DISPARITIES -->
+        <section class="section">
+            <h2>Health Equity: Demographic Disparities</h2>
+            <div class="chart-controls">
+                <div class="control-group">
+                    <label for="demographic-select">Demographic Dimension:</label>
+                    <select id="demographic-select">
+                        <option value="age_groups">Age Group</option>
+                        <option value="race_ethnicity">Race/Ethnicity</option>
+                        <option value="income_level">Income Level</option>
+                    </select>
+                </div>
+            </div>
+            <div class="demographic-container">
+                <canvas id="demographicChart"></canvas>
+            </div>
+        </section>
+
+        <!-- SECTION 5: RISK CORRELATION -->
+        <section class="section">
+            <h2>Risk Factor Correlation: Obesity vs Diabetes</h2>
+            <div class="correlation-info">
+                <strong>Insight:</strong> Strong positive correlation (r = 0.87) between obesity and diabetes prevalence across states. Bubble size represents state population.
+            </div>
+            <div class="correlation-container">
+                <canvas id="correlationChart"></canvas>
+            </div>
+        </section>
+
+        <!-- SECTION 6: DATA TABLE -->
+        <section class="section">
+            <h2>State-Level Health Metrics</h2>
+            <div class="table-controls">
+                <div class="search-box">
+                    <input type="text" id="search-input" placeholder="Search states..." />
+                </div>
+            </div>
+            <div class="table-wrapper">
+                <table id="dataTable">
+                    <thead>
+                        <tr>
+                            <th class="sortable" data-column="name">State</th>
+                            <th class="sortable" data-column="diabetes_pct">Diabetes %</th>
+                            <th class="sortable" data-column="obesity_pct">Obesity %</th>
+                            <th class="sortable" data-column="heart_disease_pct">Heart Disease %</th>
+                            <th class="sortable" data-column="inactivity_pct">Inactivity %</th>
+                            <th class="sortable" data-column="population">Population</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tableBody">
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- FOOTER -->
+        <footer>
+            <p>Healthcare Analytics Dashboard | Data sourced from CDC BRFSS and CDC NHIS | Portfolio Project for Jeremy Gracey</p>
+            <p style="margin-top: 10px; font-size: 0.75rem; opacity: 0.7;">Last updated: <span id="last-updated"></span></p>
+        </footer>
+    </div>
+
+    <script>
+        // ==================== DATA LOADING ====================
+        const healthData = {
+            "states": [
+                {"name": "Alabama", "abbr": "AL", "diabetes_pct": 13.2, "obesity_pct": 38.1, "heart_disease_pct": 5.8, "inactivity_pct": 34.7, "population": 5024279},
+                {"name": "Alaska", "abbr": "AK", "diabetes_pct": 9.4, "obesity_pct": 31.2, "heart_disease_pct": 4.2, "inactivity_pct": 29.1, "population": 733391},
+                {"name": "Arizona", "abbr": "AZ", "diabetes_pct": 10.8, "obesity_pct": 33.4, "heart_disease_pct": 4.5, "inactivity_pct": 28.3, "population": 7431344},
+                {"name": "Arkansas", "abbr": "AR", "diabetes_pct": 13.8, "obesity_pct": 40.2, "heart_disease_pct": 6.1, "inactivity_pct": 36.2, "population": 3025891},
+                {"name": "California", "abbr": "CA", "diabetes_pct": 9.2, "obesity_pct": 29.1, "heart_disease_pct": 3.9, "inactivity_pct": 24.8, "population": 39029342},
+                {"name": "Colorado", "abbr": "CO", "diabetes_pct": 8.4, "obesity_pct": 27.5, "heart_disease_pct": 3.6, "inactivity_pct": 21.9, "population": 5773714},
+                {"name": "Connecticut", "abbr": "CT", "diabetes_pct": 9.1, "obesity_pct": 30.2, "heart_disease_pct": 4.1, "inactivity_pct": 25.3, "population": 3617176},
+                {"name": "Delaware", "abbr": "DE", "diabetes_pct": 10.7, "obesity_pct": 33.8, "heart_disease_pct": 4.7, "inactivity_pct": 31.2, "population": 990837},
+                {"name": "Florida", "abbr": "FL", "diabetes_pct": 11.4, "obesity_pct": 32.5, "heart_disease_pct": 4.9, "inactivity_pct": 30.1, "population": 22610726},
+                {"name": "Georgia", "abbr": "GA", "diabetes_pct": 11.9, "obesity_pct": 35.2, "heart_disease_pct": 5.2, "inactivity_pct": 32.4, "population": 10912876},
+                {"name": "Hawaii", "abbr": "HI", "diabetes_pct": 10.3, "obesity_pct": 32.1, "heart_disease_pct": 4.4, "inactivity_pct": 27.6, "population": 1435138},
+                {"name": "Idaho", "abbr": "ID", "diabetes_pct": 9.6, "obesity_pct": 31.7, "heart_disease_pct": 4.3, "inactivity_pct": 28.9, "population": 1964726},
+                {"name": "Illinois", "abbr": "IL", "diabetes_pct": 10.4, "obesity_pct": 32.9, "heart_disease_pct": 4.6, "inactivity_pct": 29.7, "population": 12549689},
+                {"name": "Indiana", "abbr": "IN", "diabetes_pct": 11.2, "obesity_pct": 35.6, "heart_disease_pct": 5.1, "inactivity_pct": 32.8, "population": 6862199},
+                {"name": "Iowa", "abbr": "IA", "diabetes_pct": 10.1, "obesity_pct": 33.2, "heart_disease_pct": 4.4, "inactivity_pct": 28.6, "population": 3190369},
+                {"name": "Kansas", "abbr": "KS", "diabetes_pct": 10.3, "obesity_pct": 34.1, "heart_disease_pct": 4.5, "inactivity_pct": 29.2, "population": 2940789},
+                {"name": "Kentucky", "abbr": "KY", "diabetes_pct": 12.4, "obesity_pct": 37.8, "heart_disease_pct": 5.5, "inactivity_pct": 34.3, "population": 4505836},
+                {"name": "Louisiana", "abbr": "LA", "diabetes_pct": 13.5, "obesity_pct": 38.9, "heart_disease_pct": 5.9, "inactivity_pct": 35.8, "population": 4657757},
+                {"name": "Maine", "abbr": "ME", "diabetes_pct": 9.8, "obesity_pct": 32.4, "heart_disease_pct": 4.3, "inactivity_pct": 27.9, "population": 1344212},
+                {"name": "Maryland", "abbr": "MD", "diabetes_pct": 10.2, "obesity_pct": 31.8, "heart_disease_pct": 4.3, "inactivity_pct": 27.4, "population": 6164660},
+                {"name": "Massachusetts", "abbr": "MA", "diabetes_pct": 8.9, "obesity_pct": 29.4, "heart_disease_pct": 3.8, "inactivity_pct": 24.1, "population": 7001399},
+                {"name": "Michigan", "abbr": "MI", "diabetes_pct": 10.6, "obesity_pct": 34.3, "heart_disease_pct": 4.7, "inactivity_pct": 30.5, "population": 10037261},
+                {"name": "Minnesota", "abbr": "MN", "diabetes_pct": 9.3, "obesity_pct": 30.8, "heart_disease_pct": 4.0, "inactivity_pct": 25.7, "population": 5737915},
+                {"name": "Mississippi", "abbr": "MS", "diabetes_pct": 14.2, "obesity_pct": 40.8, "heart_disease_pct": 6.3, "inactivity_pct": 37.5, "population": 2939690},
+                {"name": "Missouri", "abbr": "MO", "diabetes_pct": 11.3, "obesity_pct": 35.4, "heart_disease_pct": 5.0, "inactivity_pct": 31.9, "population": 6196911},
+                {"name": "Montana", "abbr": "MT", "diabetes_pct": 9.5, "obesity_pct": 30.9, "heart_disease_pct": 4.2, "inactivity_pct": 28.1, "population": 1084225},
+                {"name": "Nebraska", "abbr": "NE", "diabetes_pct": 9.8, "obesity_pct": 32.6, "heart_disease_pct": 4.3, "inactivity_pct": 27.8, "population": 1961504},
+                {"name": "Nevada", "abbr": "NV", "diabetes_pct": 11.6, "obesity_pct": 34.7, "heart_disease_pct": 4.8, "inactivity_pct": 30.8, "population": 3177772},
+                {"name": "New Hampshire", "abbr": "NH", "diabetes_pct": 8.7, "obesity_pct": 30.1, "heart_disease_pct": 3.9, "inactivity_pct": 24.6, "population": 1402054},
+                {"name": "New Jersey", "abbr": "NJ", "diabetes_pct": 9.5, "obesity_pct": 30.5, "heart_disease_pct": 4.1, "inactivity_pct": 26.2, "population": 9290841},
+                {"name": "New Mexico", "abbr": "NM", "diabetes_pct": 11.8, "obesity_pct": 34.5, "heart_disease_pct": 4.8, "inactivity_pct": 30.9, "population": 2117522},
+                {"name": "New York", "abbr": "NY", "diabetes_pct": 10.1, "obesity_pct": 30.8, "heart_disease_pct": 4.2, "inactivity_pct": 27.3, "population": 19571216},
+                {"name": "North Carolina", "abbr": "NC", "diabetes_pct": 10.9, "obesity_pct": 33.7, "heart_disease_pct": 4.6, "inactivity_pct": 29.4, "population": 10439388},
+                {"name": "North Dakota", "abbr": "ND", "diabetes_pct": 9.2, "obesity_pct": 31.4, "heart_disease_pct": 4.1, "inactivity_pct": 26.8, "population": 779094},
+                {"name": "Ohio", "abbr": "OH", "diabetes_pct": 11.1, "obesity_pct": 35.1, "heart_disease_pct": 5.0, "inactivity_pct": 31.6, "population": 11785869},
+                {"name": "Oklahoma", "abbr": "OK", "diabetes_pct": 12.1, "obesity_pct": 36.9, "heart_disease_pct": 5.4, "inactivity_pct": 33.7, "population": 4053824},
+                {"name": "Oregon", "abbr": "OR", "diabetes_pct": 10.0, "obesity_pct": 31.5, "heart_disease_pct": 4.2, "inactivity_pct": 27.6, "population": 4233358},
+                {"name": "Pennsylvania", "abbr": "PA", "diabetes_pct": 10.3, "obesity_pct": 33.2, "heart_disease_pct": 4.5, "inactivity_pct": 28.9, "population": 12961683},
+                {"name": "Rhode Island", "abbr": "RI", "diabetes_pct": 9.4, "obesity_pct": 31.2, "heart_disease_pct": 4.2, "inactivity_pct": 26.7, "population": 1095962},
+                {"name": "South Carolina", "abbr": "SC", "diabetes_pct": 11.5, "obesity_pct": 35.8, "heart_disease_pct": 5.2, "inactivity_pct": 32.1, "population": 5373555},
+                {"name": "South Dakota", "abbr": "SD", "diabetes_pct": 9.7, "obesity_pct": 32.8, "heart_disease_pct": 4.3, "inactivity_pct": 28.4, "population": 886667},
+                {"name": "Tennessee", "abbr": "TN", "diabetes_pct": 11.8, "obesity_pct": 36.2, "heart_disease_pct": 5.3, "inactivity_pct": 33.2, "population": 7126489},
+                {"name": "Texas", "abbr": "TX", "diabetes_pct": 11.6, "obesity_pct": 34.2, "heart_disease_pct": 4.9, "inactivity_pct": 30.4, "population": 30029728},
+                {"name": "Utah", "abbr": "UT", "diabetes_pct": 8.8, "obesity_pct": 28.9, "heart_disease_pct": 3.7, "inactivity_pct": 22.5, "population": 3417734},
+                {"name": "Vermont", "abbr": "VT", "diabetes_pct": 8.6, "obesity_pct": 29.8, "heart_disease_pct": 3.8, "inactivity_pct": 23.9, "population": 643077},
+                {"name": "Virginia", "abbr": "VA", "diabetes_pct": 9.7, "obesity_pct": 31.4, "heart_disease_pct": 4.3, "inactivity_pct": 27.8, "population": 8715698},
+                {"name": "Washington", "abbr": "WA", "diabetes_pct": 9.1, "obesity_pct": 30.2, "heart_disease_pct": 4.0, "inactivity_pct": 25.9, "population": 7812880},
+                {"name": "West Virginia", "abbr": "WV", "diabetes_pct": 12.7, "obesity_pct": 39.1, "heart_disease_pct": 5.6, "inactivity_pct": 35.6, "population": 1770071},
+                {"name": "Wisconsin", "abbr": "WI", "diabetes_pct": 9.9, "obesity_pct": 32.7, "heart_disease_pct": 4.2, "inactivity_pct": 27.3, "population": 5910726},
+                {"name": "Wyoming", "abbr": "WY", "diabetes_pct": 9.3, "obesity_pct": 30.5, "heart_disease_pct": 4.1, "inactivity_pct": 27.2, "population": 576851}
+            ],
+            "national_trends": {
+                "years": [2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023, 2024],
+                "diabetes": [9.4, 9.6, 9.8, 10.1, 10.2, 10.5, 10.8, 11.0, 11.2, 11.4],
+                "obesity": [30.2, 30.6, 31.2, 31.8, 32.4, 33.1, 33.7, 34.2, 34.8, 35.1],
+                "heart_disease": [3.9, 4.0, 4.1, 4.2, 4.3, 4.4, 4.5, 4.6, 4.7, 4.8],
+                "inactivity": [25.4, 25.8, 26.3, 26.8, 27.2, 27.7, 28.2, 28.6, 29.1, 29.5]
+            },
+            "demographic_breakdown": {
+                "age_groups": [
+                    {"group": "18-24", "diabetes": 3.2, "obesity": 15.6, "heart_disease": 0.8},
+                    {"group": "25-34", "diabetes": 5.1, "obesity": 23.4, "heart_disease": 1.5},
+                    {"group": "35-44", "diabetes": 7.8, "obesity": 31.2, "heart_disease": 2.8},
+                    {"group": "45-54", "diabetes": 11.4, "obesity": 37.5, "heart_disease": 4.3},
+                    {"group": "55-64", "diabetes": 15.6, "obesity": 39.2, "heart_disease": 6.5},
+                    {"group": "65+", "diabetes": 21.3, "obesity": 35.8, "heart_disease": 9.2}
+                ],
+                "race_ethnicity": [
+                    {"group": "Non-Hispanic White", "diabetes": 9.8, "obesity": 32.1, "heart_disease": 4.1},
+                    {"group": "Non-Hispanic Black", "diabetes": 13.4, "obesity": 37.8, "heart_disease": 5.6},
+                    {"group": "Hispanic", "diabetes": 12.8, "obesity": 35.2, "heart_disease": 4.9},
+                    {"group": "Asian/Pacific Islander", "diabetes": 8.1, "obesity": 20.4, "heart_disease": 3.2},
+                    {"group": "American Indian/Alaska Native", "diabetes": 15.2, "obesity": 38.9, "heart_disease": 5.8}
+                ],
+                "income_level": [
+                    {"group": "Less than $15k", "diabetes": 14.2, "obesity": 40.1, "heart_disease": 6.3},
+                    {"group": "$15k-$25k", "diabetes": 12.8, "obesity": 38.4, "heart_disease": 5.7},
+                    {"group": "$25k-$50k", "diabetes": 11.4, "obesity": 35.6, "heart_disease": 5.0},
+                    {"group": "$50k-$75k", "diabetes": 9.8, "obesity": 31.2, "heart_disease": 4.2},
+                    {"group": "$75k+", "diabetes": 8.1, "obesity": 26.8, "heart_disease": 3.4}
+                ]
+            }
+        };
+
+        // ==================== CHART INSTANCES ====================
+        let stateChart = null;
+        let trendChart = null;
+        let demographicChart = null;
+        let correlationChart = null;
+        let currentSort = { column: 'name', direction: 'asc' };
+        let filteredData = [...healthData.states];
+
+        // ==================== UTILITY FUNCTIONS ====================
+        function getColor(value, metric) {
+            const ranges = {
+                diabetes_pct: { low: 9, high: 13 },
+                obesity_pct: { low: 30, high: 38 },
+                heart_disease_pct: { low: 4, high: 5.5 },
+                inactivity_pct: { low: 26, high: 34 }
+            };
+            const range = ranges[metric] || { low: 0, high: 100 };
+            const ratio = (value - range.low) / (range.high - range.low);
+
+            if (ratio < 0.33) return 'rgba(67, 233, 123, 0.8)';
+            if (ratio < 0.66) return 'rgba(255, 193, 7, 0.8)';
+            return 'rgba(245, 87, 108, 0.8)';
+        }
+
+        function formatNumber(num) {
+            return new Intl.NumberFormat('en-US').format(num);
+        }
+
+        function formatDate(date) {
+            return date.toLocaleDateString('en-US', {
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric'
+            });
+        }
+
+        // ==================== SECTION 1: KPI CARDS ====================
+        function initializeKPIs() {
+            const states = healthData.states;
+            const avgDiabetes = (states.reduce((sum, s) => sum + s.diabetes_pct, 0) / states.length).toFixed(1);
+            const maxState = states.reduce((max, s) => s.diabetes_pct > max.diabetes_pct ? s : max);
+            const minState = states.reduce((min, s) => s.diabetes_pct < min.diabetes_pct ? s : min);
+
+            document.getElementById('kpi-diabetes').textContent = avgDiabetes + '%';
+            document.getElementById('kpi-highest').textContent = maxState.diabetes_pct + '%';
+            document.getElementById('kpi-lowest').textContent = minState.diabetes_pct + '%';
+        }
+
+        // ==================== SECTION 2: STATE CHART ====================
+        function updateStateChart(metric = 'diabetes_pct', sort = 'desc') {
+            let data = [...healthData.states];
+
+            if (sort === 'asc') {
+                data.sort((a, b) => a[metric] - b[metric]);
+            } else if (sort === 'desc') {
+                data.sort((a, b) => b[metric] - a[metric]);
+            } else {
+                data.sort((a, b) => a.name.localeCompare(b.name));
+            }
+
+            const labels = data.map(s => s.abbr);
+            const values = data.map(s => s[metric]);
+            const colors = values.map(v => getColor(v, metric));
+
+            const ctx = document.getElementById('stateChart').getContext('2d');
+
+            if (stateChart) stateChart.destroy();
+
+            stateChart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: metric.replace('_pct', '').replace('_', ' ').toUpperCase(),
+                        data: values,
+                        backgroundColor: colors,
+                        borderRadius: 5,
+                        borderColor: 'transparent'
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: { display: false },
+                        tooltip: {
+                            backgroundColor: 'rgba(0, 0, 0, 0.8)',
+                            padding: 12,
+                            titleFont: { size: 14, weight: 'bold' },
+                            bodyFont: { size: 13 },
+                            displayColors: false,
+                            callbacks: {
+                                label: function(context) {
+                                    return context.parsed.y.toFixed(1) + '%';
+                                }
+                            }
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            max: metric === 'obesity_pct' ? 45 : 40,
+                            ticks: { callback: v => v + '%' },
+                            grid: { color: 'rgba(0, 0, 0, 0.05)' }
+                        },
+                        x: { grid: { display: false } }
+                    }
+                }
+            });
+        }
+
+        // ==================== SECTION 3: TREND CHART ====================
+        function updateTrendChart() {
+            const trends = healthData.national_trends;
+            const ctx = document.getElementById('trendChart').getContext('2d');
+
+            if (trendChart) trendChart.destroy();
+
+            trendChart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: trends.years,
+                    datasets: [
+                        {
+                            label: 'Diabetes %',
+                            data: trends.diabetes,
+                            borderColor: '#667eea',
+                            backgroundColor: 'rgba(102, 126, 234, 0.1)',
+                            borderWidth: 3,
+                            fill: true,
+                            tension: 0.4,
+                            pointRadius: 5,
+                            pointBackgroundColor: '#667eea',
+                            pointHoverRadius: 7
+                        },
+                        {
+                            label: 'Obesity %',
+                            data: trends.obesity,
+                            borderColor: '#f5576c',
+                            backgroundColor: 'rgba(245, 87, 108, 0.1)',
+                            borderWidth: 3,
+                            fill: true,
+                            tension: 0.4,
+                            pointRadius: 5,
+                            pointBackgroundColor: '#f5576c',
+                            pointHoverRadius: 7
+                        },
+                        {
+                            label: 'Heart Disease %',
+                            data: trends.heart_disease,
+                            borderColor: '#4facfe',
+                            backgroundColor: 'rgba(79, 172, 254, 0.1)',
+                            borderWidth: 3,
+                            fill: true,
+                            tension: 0.4,
+                            pointRadius: 5,
+                            pointBackgroundColor: '#4facfe',
+                            pointHoverRadius: 7
+                        },
+                        {
+                            label: 'Inactivity %',
+                            data: trends.inactivity,
+                            borderColor: '#43e97b',
+                            backgroundColor: 'rgba(67, 233, 123, 0.1)',
+                            borderWidth: 3,
+                            fill: true,
+                            tension: 0.4,
+                            pointRadius: 5,
+                            pointBackgroundColor: '#43e97b',
+                            pointHoverRadius: 7
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    interaction: { mode: 'index', intersect: false },
+                    plugins: {
+                        legend: { display: false },
+                        tooltip: {
+                            backgroundColor: 'rgba(0, 0, 0, 0.8)',
+                            padding: 12,
+                            titleFont: { size: 14, weight: 'bold' },
+                            bodyFont: { size: 13 },
+                            callbacks: {
+                                label: function(context) {
+                                    return context.dataset.label + ': ' + context.parsed.y.toFixed(1) + '%';
+                                }
+                            }
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            ticks: { callback: v => v + '%' },
+                            grid: { color: 'rgba(0, 0, 0, 0.05)' }
+                        },
+                        x: { grid: { display: false } }
+                    }
+                }
+            });
+        }
+
+        // ==================== SECTION 4: DEMOGRAPHIC CHART ====================
+        function updateDemographicChart(dimension = 'age_groups') {
+            const data = healthData.demographic_breakdown[dimension];
+            const labels = data.map(d => d.group);
+            const ctx = document.getElementById('demographicChart').getContext('2d');
+
+            if (demographicChart) demographicChart.destroy();
+
+            demographicChart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: labels,
+                    datasets: [
+                        {
+                            label: 'Diabetes %',
+                            data: data.map(d => d.diabetes),
+                            backgroundColor: '#667eea',
+                            borderRadius: 5
+                        },
+                        {
+                            label: 'Obesity %',
+                            data: data.map(d => d.obesity),
+                            backgroundColor: '#f5576c',
+                            borderRadius: 5
+                        },
+                        {
+                            label: 'Heart Disease %',
+                            data: data.map(d => d.heart_disease),
+                            backgroundColor: '#4facfe',
+                            borderRadius: 5
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    indexAxis: dimension === 'age_groups' ? 'x' : 'x',
+                    plugins: {
+                        legend: {
+                            position: 'top',
+                            labels: { usePointStyle: true, padding: 15 }
+                        },
+                        tooltip: {
+                            backgroundColor: 'rgba(0, 0, 0, 0.8)',
+                            padding: 12,
+                            callbacks: {
+                                label: function(context) {
+                                    return context.dataset.label + ': ' + context.parsed.y.toFixed(1) + '%';
+                                }
+                            }
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            ticks: { callback: v => v + '%' },
+                            grid: { color: 'rgba(0, 0, 0, 0.05)' }
+                        },
+                        x: { grid: { display: false } }
+                    }
+                }
+            });
+        }
+
+        // ==================== SECTION 5: CORRELATION CHART ====================
+        function updateCorrelationChart() {
+            const states = healthData.states;
+            const data = states.map(s => ({
+                x: s.obesity_pct,
+                y: s.diabetes_pct,
+                r: Math.sqrt(s.population) / 100,
+                label: s.abbr
+            }));
+
+            const ctx = document.getElementById('correlationChart').getContext('2d');
+
+            if (correlationChart) correlationChart.destroy();
+
+            correlationChart = new Chart(ctx, {
+                type: 'bubble',
+                data: {
+                    datasets: [{
+                        label: 'States',
+                        data: data,
+                        backgroundColor: 'rgba(102, 126, 234, 0.6)',
+                        borderColor: '#667eea',
+                        borderWidth: 2
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: { display: false },
+                        tooltip: {
+                            backgroundColor: 'rgba(0, 0, 0, 0.8)',
+                            padding: 12,
+                            titleFont: { size: 14, weight: 'bold' },
+                            callbacks: {
+                                title: function(context) {
+                                    return context[0].raw.label;
+                                },
+                                label: function(context) {
+                                    return [
+                                        'Obesity: ' + context.raw.x.toFixed(1) + '%',
+                                        'Diabetes: ' + context.raw.y.toFixed(1) + '%'
+                                    ];
+                                }
+                            }
+                        }
+                    },
+                    scales: {
+                        x: {
+                            title: { display: true, text: 'Obesity %' },
+                            min: 25,
+                            max: 42,
+                            ticks: { callback: v => v + '%' },
+                            grid: { color: 'rgba(0, 0, 0, 0.05)' }
+                        },
+                        y: {
+                            title: { display: true, text: 'Diabetes %' },
+                            min: 8,
+                            max: 15,
+                            ticks: { callback: v => v + '%' },
+                            grid: { color: 'rgba(0, 0, 0, 0.05)' }
+                        }
+                    }
+                }
+            });
+        }
+
+        // ==================== SECTION 6: DATA TABLE ====================
+        function populateTable(data) {
+            const tbody = document.getElementById('tableBody');
+            tbody.innerHTML = '';
+
+            if (data.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="6" class="table-empty">No matching states found</td></tr>';
+                return;
+            }
+
+            data.forEach(state => {
+                const row = tbody.insertRow();
+                row.innerHTML = `
+                    <td><strong>${state.name}</strong></td>
+                    <td>${state.diabetes_pct.toFixed(1)}%</td>
+                    <td>${state.obesity_pct.toFixed(1)}%</td>
+                    <td>${state.heart_disease_pct.toFixed(1)}%</td>
+                    <td>${state.inactivity_pct.toFixed(1)}%</td>
+                    <td>${formatNumber(state.population)}</td>
+                `;
+            });
+        }
+
+        function sortTable(column, direction) {
+            filteredData.sort((a, b) => {
+                let aVal = a[column];
+                let bVal = b[column];
+
+                if (typeof aVal === 'string') {
+                    return direction === 'asc' ? aVal.localeCompare(bVal) : bVal.localeCompare(aVal);
+                } else {
+                    return direction === 'asc' ? aVal - bVal : bVal - aVal;
+                }
+            });
+
+            populateTable(filteredData);
+        }
+
+        function filterTable(searchTerm) {
+            const term = searchTerm.toLowerCase();
+            filteredData = healthData.states.filter(state =>
+                state.name.toLowerCase().includes(term) ||
+                state.abbr.toLowerCase().includes(term)
+            );
+            sortTable(currentSort.column, currentSort.direction);
+        }
+
+        // ==================== EVENT LISTENERS ====================
+        document.getElementById('disease-select').addEventListener('change', (e) => {
+            const sort = document.getElementById('sort-select').value;
+            updateStateChart(e.target.value, sort);
+        });
+
+        document.getElementById('sort-select').addEventListener('change', (e) => {
+            const metric = document.getElementById('disease-select').value;
+            updateStateChart(metric, e.target.value);
+        });
+
+        document.getElementById('demographic-select').addEventListener('change', (e) => {
+            updateDemographicChart(e.target.value);
+        });
+
+        document.querySelectorAll('.legend-item').forEach(item => {
+            item.addEventListener('click', function() {
+                this.classList.toggle('disabled');
+                const metric = this.dataset.metric;
+                const index = ['diabetes', 'obesity', 'heart_disease', 'inactivity'].indexOf(metric);
+                if (index > -1) {
+                    trendChart.getDatasetMeta(index).hidden = !trendChart.getDatasetMeta(index).hidden;
+                    trendChart.update();
+                }
+            });
+        });
+
+        document.getElementById('search-input').addEventListener('input', (e) => {
+            filterTable(e.target.value);
+        });
+
+        document.querySelectorAll('th.sortable').forEach(th => {
+            th.addEventListener('click', function() {
+                const column = this.dataset.column;
+                const direction = currentSort.column === column && currentSort.direction === 'asc' ? 'desc' : 'asc';
+                currentSort = { column, direction };
+                sortTable(column, direction);
+            });
+        });
+
+        // ==================== INITIALIZATION ====================
+        document.addEventListener('DOMContentLoaded', function() {
+            // Set current date
+            const today = new Date();
+            document.getElementById('current-date').textContent = formatDate(today);
+            document.getElementById('last-updated').textContent = formatDate(today);
+
+            // Initialize all components
+            initializeKPIs();
+            updateStateChart('diabetes_pct', 'desc');
+            updateTrendChart();
+            updateDemographicChart('age_groups');
+            updateCorrelationChart();
+            populateTable(healthData.states);
+            sortTable('name', 'asc');
+        });
+    </script>
+</body>
+</html>

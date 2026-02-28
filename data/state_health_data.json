@@ -1,0 +1,565 @@
+{
+  "states": [
+    {
+      "name": "Alabama",
+      "abbr": "AL",
+      "diabetes_pct": 13.2,
+      "obesity_pct": 38.1,
+      "heart_disease_pct": 5.8,
+      "inactivity_pct": 34.7,
+      "population": 5024279
+    },
+    {
+      "name": "Alaska",
+      "abbr": "AK",
+      "diabetes_pct": 9.4,
+      "obesity_pct": 31.2,
+      "heart_disease_pct": 4.2,
+      "inactivity_pct": 29.1,
+      "population": 733391
+    },
+    {
+      "name": "Arizona",
+      "abbr": "AZ",
+      "diabetes_pct": 10.8,
+      "obesity_pct": 33.4,
+      "heart_disease_pct": 4.5,
+      "inactivity_pct": 28.3,
+      "population": 7431344
+    },
+    {
+      "name": "Arkansas",
+      "abbr": "AR",
+      "diabetes_pct": 13.8,
+      "obesity_pct": 40.2,
+      "heart_disease_pct": 6.1,
+      "inactivity_pct": 36.2,
+      "population": 3025891
+    },
+    {
+      "name": "California",
+      "abbr": "CA",
+      "diabetes_pct": 9.2,
+      "obesity_pct": 29.1,
+      "heart_disease_pct": 3.9,
+      "inactivity_pct": 24.8,
+      "population": 39029342
+    },
+    {
+      "name": "Colorado",
+      "abbr": "CO",
+      "diabetes_pct": 8.4,
+      "obesity_pct": 27.5,
+      "heart_disease_pct": 3.6,
+      "inactivity_pct": 21.9,
+      "population": 5773714
+    },
+    {
+      "name": "Connecticut",
+      "abbr": "CT",
+      "diabetes_pct": 9.1,
+      "obesity_pct": 30.2,
+      "heart_disease_pct": 4.1,
+      "inactivity_pct": 25.3,
+      "population": 3617176
+    },
+    {
+      "name": "Delaware",
+      "abbr": "DE",
+      "diabetes_pct": 10.7,
+      "obesity_pct": 33.8,
+      "heart_disease_pct": 4.7,
+      "inactivity_pct": 31.2,
+      "population": 990837
+    },
+    {
+      "name": "Florida",
+      "abbr": "FL",
+      "diabetes_pct": 11.4,
+      "obesity_pct": 32.5,
+      "heart_disease_pct": 4.9,
+      "inactivity_pct": 30.1,
+      "population": 22610726
+    },
+    {
+      "name": "Georgia",
+      "abbr": "GA",
+      "diabetes_pct": 11.9,
+      "obesity_pct": 35.2,
+      "heart_disease_pct": 5.2,
+      "inactivity_pct": 32.4,
+      "population": 10912876
+    },
+    {
+      "name": "Hawaii",
+      "abbr": "HI",
+      "diabetes_pct": 10.3,
+      "obesity_pct": 32.1,
+      "heart_disease_pct": 4.4,
+      "inactivity_pct": 27.6,
+      "population": 1435138
+    },
+    {
+      "name": "Idaho",
+      "abbr": "ID",
+      "diabetes_pct": 9.6,
+      "obesity_pct": 31.7,
+      "heart_disease_pct": 4.3,
+      "inactivity_pct": 28.9,
+      "population": 1964726
+    },
+    {
+      "name": "Illinois",
+      "abbr": "IL",
+      "diabetes_pct": 10.4,
+      "obesity_pct": 32.9,
+      "heart_disease_pct": 4.6,
+      "inactivity_pct": 29.7,
+      "population": 12549689
+    },
+    {
+      "name": "Indiana",
+      "abbr": "IN",
+      "diabetes_pct": 11.2,
+      "obesity_pct": 35.6,
+      "heart_disease_pct": 5.1,
+      "inactivity_pct": 32.8,
+      "population": 6862199
+    },
+    {
+      "name": "Iowa",
+      "abbr": "IA",
+      "diabetes_pct": 10.1,
+      "obesity_pct": 33.2,
+      "heart_disease_pct": 4.4,
+      "inactivity_pct": 28.6,
+      "population": 3190369
+    },
+    {
+      "name": "Kansas",
+      "abbr": "KS",
+      "diabetes_pct": 10.3,
+      "obesity_pct": 34.1,
+      "heart_disease_pct": 4.5,
+      "inactivity_pct": 29.2,
+      "population": 2940789
+    },
+    {
+      "name": "Kentucky",
+      "abbr": "KY",
+      "diabetes_pct": 12.4,
+      "obesity_pct": 37.8,
+      "heart_disease_pct": 5.5,
+      "inactivity_pct": 34.3,
+      "population": 4505836
+    },
+    {
+      "name": "Louisiana",
+      "abbr": "LA",
+      "diabetes_pct": 13.5,
+      "obesity_pct": 38.9,
+      "heart_disease_pct": 5.9,
+      "inactivity_pct": 35.8,
+      "population": 4657757
+    },
+    {
+      "name": "Maine",
+      "abbr": "ME",
+      "diabetes_pct": 9.8,
+      "obesity_pct": 32.4,
+      "heart_disease_pct": 4.3,
+      "inactivity_pct": 27.9,
+      "population": 1344212
+    },
+    {
+      "name": "Maryland",
+      "abbr": "MD",
+      "diabetes_pct": 10.2,
+      "obesity_pct": 31.8,
+      "heart_disease_pct": 4.3,
+      "inactivity_pct": 27.4,
+      "population": 6164660
+    },
+    {
+      "name": "Massachusetts",
+      "abbr": "MA",
+      "diabetes_pct": 8.9,
+      "obesity_pct": 29.4,
+      "heart_disease_pct": 3.8,
+      "inactivity_pct": 24.1,
+      "population": 7001399
+    },
+    {
+      "name": "Michigan",
+      "abbr": "MI",
+      "diabetes_pct": 10.6,
+      "obesity_pct": 34.3,
+      "heart_disease_pct": 4.7,
+      "inactivity_pct": 30.5,
+      "population": 10037261
+    },
+    {
+      "name": "Minnesota",
+      "abbr": "MN",
+      "diabetes_pct": 9.3,
+      "obesity_pct": 30.8,
+      "heart_disease_pct": 4.0,
+      "inactivity_pct": 25.7,
+      "population": 5737915
+    },
+    {
+      "name": "Mississippi",
+      "abbr": "MS",
+      "diabetes_pct": 14.2,
+      "obesity_pct": 40.8,
+      "heart_disease_pct": 6.3,
+      "inactivity_pct": 37.5,
+      "population": 2939690
+    },
+    {
+      "name": "Missouri",
+      "abbr": "MO",
+      "diabetes_pct": 11.3,
+      "obesity_pct": 35.4,
+      "heart_disease_pct": 5.0,
+      "inactivity_pct": 31.9,
+      "population": 6196911
+    },
+    {
+      "name": "Montana",
+      "abbr": "MT",
+      "diabetes_pct": 9.5,
+      "obesity_pct": 30.9,
+      "heart_disease_pct": 4.2,
+      "inactivity_pct": 28.1,
+      "population": 1084225
+    },
+    {
+      "name": "Nebraska",
+      "abbr": "NE",
+      "diabetes_pct": 9.8,
+      "obesity_pct": 32.6,
+      "heart_disease_pct": 4.3,
+      "inactivity_pct": 27.8,
+      "population": 1961504
+    },
+    {
+      "name": "Nevada",
+      "abbr": "NV",
+      "diabetes_pct": 11.6,
+      "obesity_pct": 34.7,
+      "heart_disease_pct": 4.8,
+      "inactivity_pct": 30.8,
+      "population": 3177772
+    },
+    {
+      "name": "New Hampshire",
+      "abbr": "NH",
+      "diabetes_pct": 8.7,
+      "obesity_pct": 30.1,
+      "heart_disease_pct": 3.9,
+      "inactivity_pct": 24.6,
+      "population": 1402054
+    },
+    {
+      "name": "New Jersey",
+      "abbr": "NJ",
+      "diabetes_pct": 9.5,
+      "obesity_pct": 30.5,
+      "heart_disease_pct": 4.1,
+      "inactivity_pct": 26.2,
+      "population": 9290841
+    },
+    {
+      "name": "New Mexico",
+      "abbr": "NM",
+      "diabetes_pct": 11.8,
+      "obesity_pct": 34.5,
+      "heart_disease_pct": 4.8,
+      "inactivity_pct": 30.9,
+      "population": 2117522
+    },
+    {
+      "name": "New York",
+      "abbr": "NY",
+      "diabetes_pct": 10.1,
+      "obesity_pct": 30.8,
+      "heart_disease_pct": 4.2,
+      "inactivity_pct": 27.3,
+      "population": 19571216
+    },
+    {
+      "name": "North Carolina",
+      "abbr": "NC",
+      "diabetes_pct": 10.9,
+      "obesity_pct": 33.7,
+      "heart_disease_pct": 4.6,
+      "inactivity_pct": 29.4,
+      "population": 10439388
+    },
+    {
+      "name": "North Dakota",
+      "abbr": "ND",
+      "diabetes_pct": 9.2,
+      "obesity_pct": 31.4,
+      "heart_disease_pct": 4.1,
+      "inactivity_pct": 26.8,
+      "population": 779094
+    },
+    {
+      "name": "Ohio",
+      "abbr": "OH",
+      "diabetes_pct": 11.1,
+      "obesity_pct": 35.1,
+      "heart_disease_pct": 5.0,
+      "inactivity_pct": 31.6,
+      "population": 11785869
+    },
+    {
+      "name": "Oklahoma",
+      "abbr": "OK",
+      "diabetes_pct": 12.1,
+      "obesity_pct": 36.9,
+      "heart_disease_pct": 5.4,
+      "inactivity_pct": 33.7,
+      "population": 4053824
+    },
+    {
+      "name": "Oregon",
+      "abbr": "OR",
+      "diabetes_pct": 10.0,
+      "obesity_pct": 31.5,
+      "heart_disease_pct": 4.2,
+      "inactivity_pct": 27.6,
+      "population": 4233358
+    },
+    {
+      "name": "Pennsylvania",
+      "abbr": "PA",
+      "diabetes_pct": 10.3,
+      "obesity_pct": 33.2,
+      "heart_disease_pct": 4.5,
+      "inactivity_pct": 28.9,
+      "population": 12961683
+    },
+    {
+      "name": "Rhode Island",
+      "abbr": "RI",
+      "diabetes_pct": 9.4,
+      "obesity_pct": 31.2,
+      "heart_disease_pct": 4.2,
+      "inactivity_pct": 26.7,
+      "population": 1095962
+    },
+    {
+      "name": "South Carolina",
+      "abbr": "SC",
+      "diabetes_pct": 11.5,
+      "obesity_pct": 35.8,
+      "heart_disease_pct": 5.2,
+      "inactivity_pct": 32.1,
+      "population": 5373555
+    },
+    {
+      "name": "South Dakota",
+      "abbr": "SD",
+      "diabetes_pct": 9.7,
+      "obesity_pct": 32.8,
+      "heart_disease_pct": 4.3,
+      "inactivity_pct": 28.4,
+      "population": 886667
+    },
+    {
+      "name": "Tennessee",
+      "abbr": "TN",
+      "diabetes_pct": 11.8,
+      "obesity_pct": 36.2,
+      "heart_disease_pct": 5.3,
+      "inactivity_pct": 33.2,
+      "population": 7126489
+    },
+    {
+      "name": "Texas",
+      "abbr": "TX",
+      "diabetes_pct": 11.6,
+      "obesity_pct": 34.2,
+      "heart_disease_pct": 4.9,
+      "inactivity_pct": 30.4,
+      "population": 30029728
+    },
+    {
+      "name": "Utah",
+      "abbr": "UT",
+      "diabetes_pct": 8.8,
+      "obesity_pct": 28.9,
+      "heart_disease_pct": 3.7,
+      "inactivity_pct": 22.5,
+      "population": 3417734
+    },
+    {
+      "name": "Vermont",
+      "abbr": "VT",
+      "diabetes_pct": 8.6,
+      "obesity_pct": 29.8,
+      "heart_disease_pct": 3.8,
+      "inactivity_pct": 23.9,
+      "population": 643077
+    },
+    {
+      "name": "Virginia",
+      "abbr": "VA",
+      "diabetes_pct": 9.7,
+      "obesity_pct": 31.4,
+      "heart_disease_pct": 4.3,
+      "inactivity_pct": 27.8,
+      "population": 8715698
+    },
+    {
+      "name": "Washington",
+      "abbr": "WA",
+      "diabetes_pct": 9.1,
+      "obesity_pct": 30.2,
+      "heart_disease_pct": 4.0,
+      "inactivity_pct": 25.9,
+      "population": 7812880
+    },
+    {
+      "name": "West Virginia",
+      "abbr": "WV",
+      "diabetes_pct": 12.7,
+      "obesity_pct": 39.1,
+      "heart_disease_pct": 5.6,
+      "inactivity_pct": 35.6,
+      "population": 1770071
+    },
+    {
+      "name": "Wisconsin",
+      "abbr": "WI",
+      "diabetes_pct": 9.9,
+      "obesity_pct": 32.7,
+      "heart_disease_pct": 4.2,
+      "inactivity_pct": 27.3,
+      "population": 5910726
+    },
+    {
+      "name": "Wyoming",
+      "abbr": "WY",
+      "diabetes_pct": 9.3,
+      "obesity_pct": 30.5,
+      "heart_disease_pct": 4.1,
+      "inactivity_pct": 27.2,
+      "population": 576851
+    }
+  ],
+  "national_trends": {
+    "years": [2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023, 2024],
+    "diabetes": [9.4, 9.6, 9.8, 10.1, 10.2, 10.5, 10.8, 11.0, 11.2, 11.4],
+    "obesity": [30.2, 30.6, 31.2, 31.8, 32.4, 33.1, 33.7, 34.2, 34.8, 35.1],
+    "heart_disease": [3.9, 4.0, 4.1, 4.2, 4.3, 4.4, 4.5, 4.6, 4.7, 4.8],
+    "inactivity": [25.4, 25.8, 26.3, 26.8, 27.2, 27.7, 28.2, 28.6, 29.1, 29.5]
+  },
+  "demographic_breakdown": {
+    "age_groups": [
+      {
+        "group": "18-24",
+        "diabetes": 3.2,
+        "obesity": 15.6,
+        "heart_disease": 0.8
+      },
+      {
+        "group": "25-34",
+        "diabetes": 5.1,
+        "obesity": 23.4,
+        "heart_disease": 1.5
+      },
+      {
+        "group": "35-44",
+        "diabetes": 7.8,
+        "obesity": 31.2,
+        "heart_disease": 2.8
+      },
+      {
+        "group": "45-54",
+        "diabetes": 11.4,
+        "obesity": 37.5,
+        "heart_disease": 4.3
+      },
+      {
+        "group": "55-64",
+        "diabetes": 15.6,
+        "obesity": 39.2,
+        "heart_disease": 6.5
+      },
+      {
+        "group": "65+",
+        "diabetes": 21.3,
+        "obesity": 35.8,
+        "heart_disease": 9.2
+      }
+    ],
+    "race_ethnicity": [
+      {
+        "group": "Non-Hispanic White",
+        "diabetes": 9.8,
+        "obesity": 32.1,
+        "heart_disease": 4.1
+      },
+      {
+        "group": "Non-Hispanic Black",
+        "diabetes": 13.4,
+        "obesity": 37.8,
+        "heart_disease": 5.6
+      },
+      {
+        "group": "Hispanic",
+        "diabetes": 12.8,
+        "obesity": 35.2,
+        "heart_disease": 4.9
+      },
+      {
+        "group": "Asian/Pacific Islander",
+        "diabetes": 8.1,
+        "obesity": 20.4,
+        "heart_disease": 3.2
+      },
+      {
+        "group": "American Indian/Alaska Native",
+        "diabetes": 15.2,
+        "obesity": 38.9,
+        "heart_disease": 5.8
+      }
+    ],
+    "income_level": [
+      {
+        "group": "Less than $15k",
+        "diabetes": 14.2,
+        "obesity": 40.1,
+        "heart_disease": 6.3
+      },
+      {
+        "group": "$15k-$25k",
+        "diabetes": 12.8,
+        "obesity": 38.4,
+        "heart_disease": 5.7
+      },
+      {
+        "group": "$25k-$50k",
+        "diabetes": 11.4,
+        "obesity": 35.6,
+        "heart_disease": 5.0
+      },
+      {
+        "group": "$50k-$75k",
+        "diabetes": 9.8,
+        "obesity": 31.2,
+        "heart_disease": 4.2
+      },
+      {
+        "group": "$75k+",
+        "diabetes": 8.1,
+        "obesity": 26.8,
+        "heart_disease": 3.4
+      }
+    ]
+  }
+}
